@@ -1,0 +1,27 @@
+{
+    "variables": {
+        "access_key": "",
+        "secret_key": ""
+    },
+    "builders": [{
+        "type": "alicloud-ecs",
+        "access_key": "{{user `access_key`}}",
+        "secret_key": "{{user `secret_key`}}",
+        "region": "ap-southeast-1",
+
+        "image_name": "packer_basic",
+        "source_image": "ubuntu_16_0402_64_20G_alibase_20170818.vhd",
+        "io_optimized": "true",
+
+        "ssh_username": "root",
+        "instance_type": "ecs.n1.tiny",
+        "internet_charge_type": "PayByTraffic"
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+            "sleep 30",
+            "curl -s https://gist.githubusercontent.com/xuyuji9000/53c4c118908f0f262fafb4fe04aca7be/raw/2df20ef05cf4442c8c96da3d0c5562e2226d0a55/ubuntu-1604-install-kubeadm-with-docker.sh | bash"
+        ]
+    }]
+}
