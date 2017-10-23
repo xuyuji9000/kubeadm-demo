@@ -58,6 +58,66 @@ resource "alicloud_security_group_rule" "ssh" {
     cidr_ip           = "0.0.0.0/0"
 }
 
+resource "alicloud_security_group_rule" "kubernetes_api_server" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "6443/6443"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "etcd" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "2379/2380"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "kubelet" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "10250/10250"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "kube-scheduler" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "10251/10251"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "kube-controller-manager" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "10252/10252"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "heapster" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "10255/10255"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
 resource "alicloud_vpc" "terraform_vpc" {
     name       = "terraform_vpc"
     cidr_block = "172.16.0.0/12"
