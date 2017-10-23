@@ -17,7 +17,7 @@ resource "alicloud_instance" "web" {
     internet_max_bandwidth_out = "100"
     allocate_public_ip         = true
     
-    instance_type              = "ecs.n1.tiny"
+    instance_type              = "ecs.e3.small"
     is_outdated                = true
     system_disk_category       = "cloud_efficiency"
     instance_name              = "web"
@@ -112,6 +112,16 @@ resource "alicloud_security_group_rule" "heapster" {
     type              = "ingress"
     ip_protocol       = "tcp"
     port_range        = "10255/10255"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "web-1" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "30001/30001"
     policy            = "accept"
     priority          = 1
     security_group_id = "${alicloud_security_group.default.id}"
