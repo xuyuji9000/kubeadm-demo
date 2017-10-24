@@ -12,10 +12,6 @@ resource "alicloud_key_pair" "key_pair" {
 resource "alicloud_instance" "web" {
     availability_zone          = "${var.availability_zone}"
     image_id                   = "m-t4nj36enzsqshlf2h267"
-                                  
-    internet_charge_type       = "PayByTraffic"
-    internet_max_bandwidth_out = "100"
-    allocate_public_ip         = true
     
     instance_type              = "ecs.e3.small"
     is_outdated                = true
@@ -26,10 +22,6 @@ resource "alicloud_instance" "web" {
 
     security_groups            = ["${alicloud_security_group.default.id}"]
     vswitch_id                 = "${alicloud_vswitch.terraform_switch.id}"
-}
-
-output "ip" {
-    value = "${alicloud_instance.web.public_ip}"
 }
 
 resource "alicloud_security_group" "default" {
@@ -137,6 +129,21 @@ resource "alicloud_security_group_rule" "web-2" {
     security_group_id = "${alicloud_security_group.default.id}"
     cidr_ip           = "0.0.0.0/0"
 }
+
+resource "alicloud_eip" "eip" {
+    internet_charge_type = "PayByTraffic"
+    bandwidth            = "100"
+}
+
+resource "alicloud_eip_association" "eip_asso" {
+    allocation_id = "${alicloud_eip.eip.id}"
+    instance_id   = "${alicloud_instance.web.id}"
+}
+
+output "ip" {
+    value = "${alicloud_eip.eip.ip_address}"
+}
+
 
 resource "alicloud_vpc" "terraform_vpc" {
     name       = "terraform_vpc"
