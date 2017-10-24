@@ -121,7 +121,17 @@ resource "alicloud_security_group_rule" "heapster" {
 resource "alicloud_security_group_rule" "web-1" {
     type              = "ingress"
     ip_protocol       = "tcp"
-    port_range        = "30001/30001"
+    port_range        = "80/80"
+    policy            = "accept"
+    priority          = 1
+    security_group_id = "${alicloud_security_group.default.id}"
+    cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "web-2" {
+    type              = "ingress"
+    ip_protocol       = "tcp"
+    port_range        = "8080/8080"
     policy            = "accept"
     priority          = 1
     security_group_id = "${alicloud_security_group.default.id}"
