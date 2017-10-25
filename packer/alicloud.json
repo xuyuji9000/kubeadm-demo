@@ -21,7 +21,7 @@
         "type": "shell",
         "inline": [
             "sleep 30",
-            "curl -s https://gist.githubusercontent.com/xuyuji9000/53c4c118908f0f262fafb4fe04aca7be/raw/2df20ef05cf4442c8c96da3d0c5562e2226d0a55/ubuntu-1604-install-kubeadm-with-docker.sh | bash"
+            "curl -s https://gist.githubusercontent.com/xuyuji9000/53c4c118908f0f262fafb4fe04aca7be/raw/baa18c59fc61f4af6e94f0c048dae2fb4e04938b/ubuntu-1604-install-kubeadm-with-docker.sh | bash"
         ]
     }]
 }
