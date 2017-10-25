@@ -11,7 +11,7 @@ resource "alicloud_key_pair" "key_pair" {
 
 resource "alicloud_instance" "web" {
     availability_zone          = "${var.availability_zone}"
-    image_id                   = "m-t4nj36enzsqshlf2h267"
+    image_id                   = "m-t4ndk5nao5z3w47h0iam"
     
     instance_type              = "ecs.e3.small"
     is_outdated                = true

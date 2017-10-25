@@ -5,3 +5,8 @@ ssh:
 
 ip:
 	@terraform output ip
+
+start: 
+	@terraform init
+	@terraform plan
+	@terraform apply
