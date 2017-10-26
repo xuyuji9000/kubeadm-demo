@@ -123,7 +123,7 @@ resource "alicloud_security_group_rule" "web-1" {
 resource "alicloud_security_group_rule" "web-2" {
     type              = "ingress"
     ip_protocol       = "tcp"
-    port_range        = "8080/8080"
+    port_range        = "30189/30189"
     policy            = "accept"
     priority          = 1
     security_group_id = "${alicloud_security_group.default.id}"
