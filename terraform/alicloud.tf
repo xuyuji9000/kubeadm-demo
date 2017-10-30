@@ -17,6 +17,10 @@ resource "alicloud_instance" "web" {
     is_outdated                = true
     system_disk_category       = "cloud_efficiency"
     instance_name              = "web"
+
+    internet_charge_type       = "PayByTraffic"
+    internet_max_bandwidth_out = "100"
+    allocate_public_ip         = true
     
     key_name                   = "${alicloud_key_pair.key_pair.id}"
 
@@ -140,10 +144,6 @@ resource "alicloud_security_group_rule" "web-2" {
 #     instance_id   = "${alicloud_instance.web.id}"
 # }
 # 
-# output "ip" {
-#     value = "${alicloud_eip.eip.ip_address}"
-# }
-
 
 resource "alicloud_vpc" "terraform_vpc" {
     name       = "terraform_vpc"
@@ -180,4 +180,8 @@ resource "alicloud_slb" "default" {
 resource "alicloud_slb_attachment" "default" {
     slb_id    = "${alicloud_slb.default.id}"
     instances = ["${alicloud_instance.web.id}"]
+}
+
+output "ip" {
+    value = "${alicloud_slb.default.address}"
 }
