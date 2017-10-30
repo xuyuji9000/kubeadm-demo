@@ -13,7 +13,7 @@ resource "alicloud_instance" "web" {
     availability_zone          = "${var.availability_zone}"
     image_id                   = "m-t4nh8g1nh0vbqr2reuvl"
     
-    instance_type              = "ecs.e3.small"
+    instance_type              = "ecs.n1.medium"
     is_outdated                = true
     system_disk_category       = "cloud_efficiency"
     instance_name              = "web"
