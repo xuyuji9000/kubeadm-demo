@@ -167,6 +167,12 @@ resource "alicloud_slb" "default" {
             "lb_port"       = "80"
             "lb_protocol"   = "tcp"
             "bandwidth"     = "5"
+        },
+        {
+            "instance_port" = "22"
+            "lb_port"       = "22"
+            "lb_protocol"   = "tcp"
+            "bandwidth"     = "5"
         }
     ]
 }
