@@ -130,19 +130,19 @@ resource "alicloud_security_group_rule" "web-2" {
     cidr_ip           = "0.0.0.0/0"
 }
 
-resource "alicloud_eip" "eip" {
-    internet_charge_type = "PayByTraffic"
-    bandwidth            = "100"
-}
-
-resource "alicloud_eip_association" "eip_asso" {
-    allocation_id = "${alicloud_eip.eip.id}"
-    instance_id   = "${alicloud_instance.web.id}"
-}
-
-output "ip" {
-    value = "${alicloud_eip.eip.ip_address}"
-}
+# resource "alicloud_eip" "eip" {
+#     internet_charge_type = "PayByTraffic"
+#     bandwidth            = "100"
+# }
+# 
+# resource "alicloud_eip_association" "eip_asso" {
+#     allocation_id = "${alicloud_eip.eip.id}"
+#     instance_id   = "${alicloud_instance.web.id}"
+# }
+# 
+# output "ip" {
+#     value = "${alicloud_eip.eip.ip_address}"
+# }
 
 
 resource "alicloud_vpc" "terraform_vpc" {
@@ -154,4 +154,24 @@ resource "alicloud_vswitch" "terraform_switch" {
     vpc_id            = "${alicloud_vpc.terraform_vpc.id}"
     cidr_block        = "172.16.0.0/16"
     availability_zone = "${var.availability_zone}"
+}
+
+resource "alicloud_slb" "default" {
+    name                 = "default"
+    internet_charge_type = "paybytraffic"
+    internet             = true
+
+    listener = [
+        {
+            "instance_port" = "30189"
+            "lb_port"       = "80"
+            "lb_protocol"   = "tcp"
+            "bandwidth"     = "5"
+        }
+    ]
+}
+
+resource "alicloud_slb_attachment" "default" {
+    slb_id    = "${alicloud_slb.default.id}"
+    instances = ["${alicloud_instance.web.id}"]
 }
