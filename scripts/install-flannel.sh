@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "127.0.0.1 $(hostname)" >> /etc/hosts
+
 kubeadm init --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
